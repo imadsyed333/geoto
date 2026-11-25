@@ -58,35 +58,47 @@ export function DatasetAccessCard({ options }: DatasetAccessCardProps) {
         )}
       </div>
 
-      <div className="mt-4 space-y-4">
-        <div>
-          <label
-            htmlFor="dataset-format-select"
-            className="block text-xs font-medium uppercase tracking-wide text-slate-500"
+      <div className="mt-4 grid gap-4 md:grid-cols-[minmax(15rem,20rem)_minmax(0,1fr)] md:items-start">
+        <div className="space-y-3">
+          <div>
+            <label
+              htmlFor="dataset-format-select"
+              className="block text-xs font-medium uppercase tracking-wide text-slate-500"
+            >
+              Format
+            </label>
+            <select
+              id="dataset-format-select"
+              value={selected.key}
+              onChange={(event) => {
+                setSelectedKey(event.target.value);
+                setCopied(false);
+              }}
+              className="mt-1.5 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20"
+            >
+              {options.map((option) => {
+                const optSize = formatBytes(option.sizeBytes);
+                return (
+                  <option key={option.key} value={option.key}>
+                    {optSize ? `${option.label} — ${optSize}` : option.label}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          <a
+            href={selected.downloadUrl}
+            target="_blank"
+            rel="noreferrer"
+            download
+            className="inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-lg bg-teal-600 px-4 text-sm font-medium text-white shadow-xs hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-600/40 transition-colors"
           >
-            Format
-          </label>
-          <select
-            id="dataset-format-select"
-            value={selected.key}
-            onChange={(event) => {
-              setSelectedKey(event.target.value);
-              setCopied(false);
-            }}
-            className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20"
-          >
-            {options.map((option) => {
-              const optSize = formatBytes(option.sizeBytes);
-              return (
-                <option key={option.key} value={option.key}>
-                  {optSize ? `${option.label} — ${optSize}` : option.label}
-                </option>
-              );
-            })}
-          </select>
+            Download {selected.label}
+          </a>
         </div>
 
-        <div>
+        <div className="min-w-0">
           <label
             htmlFor="dataset-api-url"
             className="block text-xs font-medium uppercase tracking-wide text-slate-500"
@@ -100,28 +112,16 @@ export function DatasetAccessCard({ options }: DatasetAccessCardProps) {
               readOnly
               value={selected.apiUrl}
               onFocus={(event) => event.currentTarget.select()}
-              className="w-full min-w-0 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-xs text-slate-700 focus:border-teal-600 focus:outline-none"
+              className="h-10 w-full min-w-0 rounded-lg border border-slate-200 bg-slate-50 px-3 font-mono text-xs text-slate-700 focus:border-teal-600 focus:outline-none"
             />
             <button
               type="button"
               onClick={handleCopy}
-              className="shrink-0 cursor-pointer rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-teal-600/20 transition-colors"
+              className="h-10 shrink-0 cursor-pointer rounded-lg border border-slate-300 bg-white px-3 text-xs font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-teal-600/20 transition-colors"
             >
               {copied ? "Copied" : "Copy"}
             </button>
           </div>
-        </div>
-
-        <div className="pt-1">
-          <a
-            href={selected.downloadUrl}
-            target="_blank"
-            rel="noreferrer"
-            download
-            className="inline-flex w-full items-center justify-center rounded-lg bg-teal-600 px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-600/40 transition-colors"
-          >
-            Download {selected.label}
-          </a>
         </div>
       </div>
     </section>

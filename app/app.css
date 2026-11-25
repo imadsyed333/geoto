@@ -6,3 +6,70 @@
     @apply bg-slate-50 text-slate-900 antialiased;
   }
 }
+
+.markdown > * + * {
+  @apply mt-3;
+}
+
+.markdown h2 {
+  @apply text-base font-semibold text-slate-900 sm:text-lg;
+}
+
+.markdown h3,
+.markdown h4 {
+  @apply text-sm font-semibold text-slate-900 sm:text-base;
+}
+
+.markdown ul {
+  @apply list-disc space-y-1 pl-5;
+}
+
+.markdown ol {
+  @apply list-decimal space-y-1 pl-5;
+}
+
+.markdown li > ul,
+.markdown li > ol {
+  @apply mt-1;
+}
+
+.markdown a {
+  @apply break-words text-teal-700 underline underline-offset-2 hover:text-teal-800;
+}
+
+.markdown strong {
+  @apply font-semibold text-slate-800;
+}
+
+.markdown code {
+  @apply rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[0.875em] text-slate-800;
+}
+
+.markdown pre {
+  @apply overflow-x-auto rounded-lg bg-slate-100 p-3 font-mono text-xs text-slate-800;
+}
+
+.markdown pre code {
+  @apply bg-transparent p-0 text-inherit;
+}
+
+.markdown blockquote {
+  @apply border-l-2 border-slate-300 pl-3 text-slate-500;
+}
+
+.markdown hr {
+  @apply border-slate-200;
+}
+
+.markdown table {
+  @apply block overflow-x-auto border-collapse text-left text-xs;
+}
+
+.markdown th,
+.markdown td {
+  @apply border border-slate-200 px-2.5 py-1.5;
+}
+
+.markdown th {
+  @apply bg-slate-100 font-semibold text-slate-800;
+}

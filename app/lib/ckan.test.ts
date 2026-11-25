@@ -36,11 +36,13 @@ describe("CKAN normalization", () => {
     assert.deepEqual(result.topics, ["Public safety"]);
   });
 
-  it("handles missing optional dataset metadata gracefully", () => {
+  it("handles missing optional dataset metadata gracefully and preserves markdown descriptions", () => {
+    const markdownNotes =
+      "A **minimal** layer.\n\n- Includes [docs](https://example.com)";
     const pkg: RawCkanPackage = {
       id: "min-1",
       name: "minimal-layer",
-      notes: "<p>A minimal layer.</p>",
+      notes: `  ${markdownNotes}  `,
       license_id: "open-government-licence-toronto",
       maintainer_email: "gis@toronto.ca",
       owner_division: "Transportation Services",
@@ -49,7 +51,7 @@ describe("CKAN normalization", () => {
 
     const dataset = normalizeDataset(pkg);
     assert.equal(dataset.title, "minimal-layer");
-    assert.equal(dataset.description, "A minimal layer.");
+    assert.equal(dataset.description, markdownNotes);
     assert.equal(dataset.publisher, "Transportation Services — Cycling");
     assert.equal(dataset.contactInfo, "gis@toronto.ca");
     assert.equal(dataset.licence, "open-government-licence-toronto");

@@ -112,7 +112,7 @@ function normalizeStringList(
   return out;
 }
 
-function cleanText(value: string | null | undefined): string {
+export function cleanText(value: string | null | undefined): string {
   if (!value) return "";
   return value
     .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
@@ -280,7 +280,7 @@ export function normalizeDataset(pkg: RawCkanPackage): CkanDataset {
     id: pkg.id,
     slug: nonEmpty(pkg.name) ?? pkg.id,
     title: nonEmpty(pkg.title) ?? nonEmpty(pkg.name) ?? pkg.id,
-    description: cleanText(pkg.notes) || cleanText(pkg.excerpt),
+    description: nonEmpty(pkg.notes) ?? nonEmpty(pkg.excerpt) ?? "",
     datePublished: nonEmpty(pkg.date_published),
     lastUpdated: nonEmpty(pkg.last_refreshed) ?? nonEmpty(pkg.metadata_modified),
     refreshRate: nonEmpty(pkg.refresh_rate),

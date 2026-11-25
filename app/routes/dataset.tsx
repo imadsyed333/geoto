@@ -1,8 +1,10 @@
+import Markdown from "react-markdown";
 import { isRouteErrorResponse, Link } from "react-router";
+import remarkGfm from "remark-gfm";
 import type { Route } from "./+types/dataset";
 import { DatasetAccessCard } from "~/components/DatasetAccessCard";
 import { TorontoMap } from "~/components/TorontoMap";
-import { formatDate, getDataset } from "~/lib/ckan";
+import { cleanText, formatDate, getDataset } from "~/lib/ckan";
 
 export function meta({ loaderData }: Route.MetaArgs) {
   const title = loaderData?.dataset?.title;
@@ -11,7 +13,7 @@ export function meta({ loaderData }: Route.MetaArgs) {
     {
       name: "description",
       content:
-        loaderData?.dataset?.description ||
+        cleanText(loaderData?.dataset?.description) ||
         "Geospatial dataset details from Toronto Open Data.",
     },
   ];
@@ -35,16 +37,17 @@ export function HydrateFallback() {
     <div className="mx-auto max-w-6xl animate-pulse px-4 py-8 sm:px-6">
       <div className="h-4 w-32 rounded bg-slate-200" />
       <div className="mt-4 h-9 w-2/3 rounded bg-slate-200" />
-      <div className="mt-3 h-4 w-full max-w-2xl rounded bg-slate-200" />
-      <div className="mt-8 grid gap-6 lg:grid-cols-3">
-        <div className="h-[460px] rounded-xl bg-slate-200 lg:col-span-2" />
-        <div className="h-64 rounded-xl bg-slate-200" />
-      </div>
-      <div className="mt-8 grid gap-4 sm:grid-cols-3">
+      <div className="mt-6 grid gap-4 rounded-xl bg-slate-200/60 p-6 sm:grid-cols-3">
         {Array.from({ length: 9 }).map((_, idx) => (
           <div key={idx} className="h-16 rounded-lg bg-slate-200" />
         ))}
       </div>
+      <div className="mt-6 space-y-2.5 max-w-2xl">
+        <div className="h-4 w-full rounded bg-slate-200" />
+        <div className="h-4 w-5/6 rounded bg-slate-200" />
+      </div>
+      <div className="mt-6 h-[480px] rounded-xl bg-slate-200" />
+      <div className="mt-6 h-36 rounded-xl bg-slate-200" />
     </div>
   );
 }
@@ -85,25 +88,11 @@ export default function DatasetPage({ loaderData }: Route.ComponentProps) {
         <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
           {dataset.title}
         </h1>
-        {dataset.description && (
-          <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-            {dataset.description}
-          </p>
-        )}
       </header>
-
-      <div className="mt-8 grid gap-6 lg:grid-cols-3 lg:items-start">
-        <div className="lg:col-span-2">
-          <TorontoMap />
-        </div>
-        <div>
-          <DatasetAccessCard options={dataset.formatOptions} />
-        </div>
-      </div>
 
       <section
         aria-labelledby="metadata-heading"
-        className="mt-8 rounded-xl border border-slate-200 bg-white p-6 shadow-xs"
+        className="mt-6 rounded-xl border border-slate-200 bg-white p-6 shadow-xs"
       >
         <h2
           id="metadata-heading"
@@ -189,6 +178,30 @@ export default function DatasetPage({ loaderData }: Route.ComponentProps) {
           </MetadataItem>
         </dl>
       </section>
+
+      {dataset.description && (
+        <div className="markdown mt-6 max-w-4xl text-sm leading-relaxed text-slate-600 sm:text-base">
+          <Markdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              a: ({ node: _node, ...props }) => (
+                <a {...props} target="_blank" rel="noreferrer" />
+              ),
+              h1: ({ node: _node, ...props }) => <h2 {...props} />,
+            }}
+          >
+            {dataset.description}
+          </Markdown>
+        </div>
+      )}
+
+      <div className="mt-6">
+        <TorontoMap />
+      </div>
+
+      <div className="mt-6">
+        <DatasetAccessCard options={dataset.formatOptions} />
+      </div>
     </div>
   );
 }
