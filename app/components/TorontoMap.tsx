@@ -64,11 +64,6 @@ export function TorontoMap() {
       aria-label="Toronto basemap"
       className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs"
     >
-      <div className="flex items-center justify-between border-b border-slate-100 px-4 py-2.5 text-xs text-slate-600">
-        <span className="font-medium text-slate-800">Toronto Map View</span>
-        <span>Locked to City of Toronto bounds</span>
-      </div>
-
       <div className="relative h-[420px] w-full bg-slate-100 sm:h-[480px]">
         <div ref={containerRef} className="h-full w-full" />
         {mapError && (

@@ -25,17 +25,12 @@ export function meta(_args: Route.MetaArgs) {
 export default function HomePage() {
   return (
     <div className="mx-auto flex max-w-3xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-28">
-      <p className="rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-medium text-teal-800">
-        City of Toronto Open Data · Geospatial Catalog
-      </p>
-
       <h1 className="mt-5 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
         GeoTO
       </h1>
 
       <p className="mt-3 max-w-xl text-base text-slate-600 sm:text-lg">
-        Search Toronto&apos;s geospatial open datasets, inspect metadata, and
-        grab GeoJSON, CSV, Shapefile, GeoPackage, or CKAN API endpoints.
+        The home of Toronto geospatial open data
       </p>
 
       <div className="mt-8 w-full max-w-2xl">

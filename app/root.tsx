@@ -62,8 +62,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <main className="flex-1">{children}</main>
 
         <footer className="border-t border-slate-200 bg-white py-5 text-xs text-slate-500">
-          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 sm:px-6">
-            <span>GeoTO — Geospatial explorer for Toronto Open Data</span>
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-2 px-4 sm:px-6">
             <span>Data sourced live from the City of Toronto CKAN API</span>
           </div>
         </footer>
