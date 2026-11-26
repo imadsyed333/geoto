@@ -99,4 +99,4 @@ After Phase 1 is verified, layer on the remaining User Stories ("See data points
 - [x] Implement SSR Search Results page (`/search`) with `SearchResultCard`, pagination, and empty/error states
 - [x] Implement client-rendered Dataset page (`/datasets/:id`) with metadata panel, Toronto-bounded MapLibre map, and synced Format/API/Download card
 - [x] Verify Phase 1 with `node --test`, `npm run typecheck`, `npm run build`, and live CKAN smoke check
-- [ ] Phase 2: Add `datastore_search` fast path + GeoJSON streaming Web Worker with feature-count controls, MapLibre layers/popups, and synced `DatasetTable`
+- [x] Phase 2: Add `datastore_search` fast path + GeoJSON streaming Web Worker with feature-count controls, MapLibre layers/popups, and synced `DatasetTable`
